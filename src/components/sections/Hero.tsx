@@ -41,19 +41,17 @@ export function Hero() {
               id="hero-heading"
               className="text-[clamp(3.25rem,11vw,9rem)] leading-[0.88] font-semibold tracking-[-0.05em] text-ink"
             >
-              {/* Each line slides up from behind a mask */}
-              <span className="block overflow-hidden pb-[0.06em]">
-                <span className="block animate-rise" style={{ animationDelay: "300ms" }}>
-                  {site.title[0]}
-                </span>
+              {/* Each line rises in, staggered. Not clipped by a mask: the title is the
+                  page's LCP element, and Chrome only records LCP once the whole element
+                  is visible — a mask slide would delay LCP until the animation ends. */}
+              <span className="block animate-title-in" style={{ animationDelay: "60ms" }}>
+                {site.title[0]}
               </span>{" "}
-              <span className="-mt-[0.06em] block overflow-hidden pb-[0.12em]">
-                <span
-                  className="block animate-rise font-serif font-normal tracking-[-0.02em] text-ink-soft italic"
-                  style={{ animationDelay: "420ms" }}
-                >
-                  {site.title[1]}
-                </span>
+              <span
+                className="block pb-[0.06em] animate-title-in font-serif font-normal tracking-[-0.02em] text-ink-soft italic"
+                style={{ animationDelay: "160ms" }}
+              >
+                {site.title[1]}
               </span>
             </h1>
             <p
