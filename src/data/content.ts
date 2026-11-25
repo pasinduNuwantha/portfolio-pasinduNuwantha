@@ -41,6 +41,8 @@ export type Site = {
   resumeUrl: string;
   /** One line about what you're looking for (shown at the end of the timeline) */
   availability: string;
+  /** Short line under the Contact heading */
+  contactIntro: string;
   /** Used for metadata, sitemap and Open Graph */
   url: string;
   description: string;
@@ -166,6 +168,8 @@ export const content: Content = {
     email: "pasindunuwantha19@gmail.com",
     resumeUrl: "/resume.pdf",
     availability: "I'm looking for a software engineering internship.",
+    contactIntro:
+      "Have an internship, a project or just a question? My inbox is always open — I'll get back to you soon.",
     url: "https://portfolio-pasindu-nuwantha.vercel.app", // TODO: update after first Vercel deploy
     description:
       "Pasindu Nuwantha — Software Engineering undergraduate at SLIIT building mobile and full-stack applications with React Native, the MERN stack, Docker and Kubernetes.",
