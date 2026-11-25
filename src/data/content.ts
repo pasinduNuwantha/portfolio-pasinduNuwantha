@@ -146,21 +146,22 @@ export type Content = {
 
 export const content: Content = {
   site: {
-    name: "Pasindu Nuwantha", // TODO: confirm full name as you want it displayed
+    name: "Pasindu Nuwantha",
     firstName: "Pasindu",
-    title: ["Full Stack", "Developer."], // TODO: confirm title
-    subtitle: "I design and build calm, fast, thoughtful products for the web.", // TODO
-    location: "Your City, Country", // TODO
-    email: "hello@example.com", // TODO
-    resumeUrl: "/resume.pdf", // TODO: add public/resume.pdf
+    title: ["Full Stack", "Developer."],
+    subtitle:
+      "Third-year Software Engineering undergraduate at SLIIT, building mobile and full-stack apps.",
+    location: "Gampaha, Sri Lanka",
+    email: "pasindunuwantha19@gmail.com",
+    resumeUrl: "/resume.pdf",
     url: "https://portfolio-pasindu-nuwantha.vercel.app", // TODO: update after first Vercel deploy
     description:
-      "Portfolio of Pasindu Nuwantha — full stack developer building thoughtful web products.", // TODO
+      "Pasindu Nuwantha — Software Engineering undergraduate at SLIIT building mobile and full-stack applications with React Native, the MERN stack, Docker and Kubernetes.",
     socials: {
       github: "https://github.com/pasinduNuwantha",
-      linkedin: "https://www.linkedin.com/in/your-handle", // TODO
-      // x: "https://x.com/your-handle", // TODO (optional)
-      // instagram: "https://instagram.com/your-handle", // TODO (optional)
+      linkedin: "https://www.linkedin.com/in/pasindu-nuwantha", // TODO: confirm this URL opens your profile
+      // x: "https://x.com/your-handle", // optional
+      // instagram: "https://instagram.com/your-handle", // optional
     },
   },
 
@@ -180,111 +181,186 @@ export const content: Content = {
   },
 
   about: {
-    // TODO: replace with your real bio
     bio: [
-      "I'm a developer who enjoys the whole journey of a product — from a rough idea on paper to a fast, polished experience in the browser.",
-      "Lately I've been focused on modern React, type-safe backends and the small details that make an interface feel calm and considered.",
+      "I'm a third-year Software Engineering undergraduate at SLIIT who loves building things people actually use — cross-platform mobile apps with React Native and Firebase, web apps on the MERN stack, and microservices running in Docker and Kubernetes.",
+      "I work best in small Scrum teams: two-week sprints, honest retrospectives and a review on every pull request. I like starting from real user research and turning it into features. Right now I'm looking for a software engineering internship.",
     ],
-    // TODO: your five "What I am" items
     whatIAm: [
-      { label: "Full stack developer", sub: "React · Node · SQL" },
-      { label: "Problem solver", sub: "Algorithms & clean design" },
-      { label: "Fast learner", sub: "Always picking up something new" },
-      { label: "Team player", sub: "Clear communication, honest feedback" },
-      { label: "Detail-oriented", sub: "Pixels, performance, accessibility" },
+      { label: "Full-stack developer", sub: "MERN · REST APIs" },
+      { label: "Mobile developer", sub: "React Native · Expo · Kotlin" },
+      { label: "Microservices builder", sub: "Docker · Kubernetes" },
+      { label: "Scrum team player", sub: "Sprints · Jira · code reviews" },
+      { label: "User-research driven", sub: "Interviews · personas · flows" },
     ],
-    // TODO
     facts: [
-      { label: "Based in", value: "Your City" },
-      { label: "Focus", value: "Full stack web" },
-      { label: "Currently", value: "Studying / building" },
-      { label: "Open to", value: "Internships & freelance" },
+      { label: "Based in", value: "Gampaha, Sri Lanka" },
+      { label: "Studying", value: "BSc (Hons) SE · SLIIT" },
+      { label: "Currently", value: "Third year" },
+      { label: "Open to", value: "SE internships" },
+      { label: "Off-screen", value: "Karate · Leo Club · travel" },
     ],
-    quote: "Make it work, make it right, make it calm.", // TODO
+    quote: "Talk to real users first — then let the code prove it.", // TODO: change to your own words if you like
   },
 
-  // TODO: replace with your real stack (numbers are just display order)
+  // Numbers are just display order. Notes show in the Skills detail panel.
   skills: [
-    { number: 1, symbol: "Js", name: "JavaScript", family: "languages", icon: "javascript", note: "TODO: what you use it for" },
-    { number: 2, symbol: "Ts", name: "TypeScript", family: "languages", icon: "typescript", note: "TODO" },
-    { number: 3, symbol: "Py", name: "Python", family: "languages", icon: "python", note: "TODO" },
-    { number: 4, symbol: "Re", name: "React", family: "frontend", icon: "react", note: "TODO" },
-    { number: 5, symbol: "Nx", name: "Next.js", family: "frontend", icon: "nextdotjs", note: "TODO" },
-    { number: 6, symbol: "Tw", name: "Tailwind CSS", family: "frontend", icon: "tailwindcss", note: "TODO" },
-    { number: 7, symbol: "No", name: "Node.js", family: "backend", icon: "nodedotjs", note: "TODO" },
-    { number: 8, symbol: "Ex", name: "Express", family: "backend", icon: "express", note: "TODO" },
-    { number: 9, symbol: "Pg", name: "PostgreSQL", family: "databases", icon: "postgresql", note: "TODO" },
-    { number: 10, symbol: "Mo", name: "MongoDB", family: "databases", icon: "mongodb", note: "TODO" },
-    { number: 11, symbol: "Gt", name: "Git", family: "tools", icon: "git", note: "TODO" },
-    { number: 12, symbol: "Dk", name: "Docker", family: "tools", icon: "docker", note: "TODO" },
-    { number: 13, symbol: "Fg", name: "Figma", family: "other", icon: "figma", note: "TODO" },
+    // Languages
+    { number: 1, symbol: "Js", name: "JavaScript", family: "languages", icon: "javascript", note: "My everyday language — React, React Native and Node.js." },
+    { number: 2, symbol: "Ja", name: "Java", family: "languages", icon: "openjdk", note: "Object-oriented programming and university coursework." },
+    { number: 3, symbol: "Py", name: "Python", family: "languages", icon: "python", note: "Scripting, algorithms and data work." },
+    { number: 4, symbol: "Kt", name: "Kotlin", family: "languages", icon: "kotlin", note: "Native Android apps in Android Studio." },
+    { number: 5, symbol: "C", name: "C", family: "languages", icon: "c", note: "Programming fundamentals and memory basics." },
+    { number: 6, symbol: "Cp", name: "C++", family: "languages", icon: "cplusplus", note: "Data structures and object-oriented design." },
+    { number: 7, symbol: "Ph", name: "PHP", family: "languages", icon: "php", note: "Server-side web development." },
+    // Frontend & mobile
+    { number: 8, symbol: "Re", name: "React", family: "frontend", icon: "react", note: "Web front ends, including Calm Space's mood tracker." },
+    { number: 9, symbol: "Rn", name: "React Native", family: "frontend", icon: "react", note: "Cross-platform mobile — the CleanLoop app." },
+    { number: 10, symbol: "Ex", name: "Expo", family: "frontend", icon: "expo", note: "React Native tooling and React Navigation." },
+    { number: 11, symbol: "Ht", name: "HTML", family: "frontend", icon: "html5", note: "Semantic, accessible markup." },
+    { number: 12, symbol: "Cs", name: "CSS", family: "frontend", icon: "css", note: "Responsive layouts and styling." },
+    // Backend
+    { number: 13, symbol: "No", name: "Node.js", family: "backend", icon: "nodedotjs", note: "APIs and the healthcare notification microservice." },
+    { number: 14, symbol: "Es", name: "Express", family: "backend", icon: "express", note: "REST APIs on the MERN stack." },
+    { number: 15, symbol: "Fb", name: "Firebase", family: "backend", icon: "firebase", note: "Auth, Cloud Firestore and Storage with security rules." },
+    // Databases
+    { number: 16, symbol: "Mg", name: "MongoDB", family: "databases", icon: "mongodb", note: "Document data for MERN apps." },
+    { number: 17, symbol: "My", name: "MySQL", family: "databases", icon: "mysql", note: "Relational modelling and SQL queries." },
+    { number: 18, symbol: "Fs", name: "Cloud Firestore", family: "databases", icon: "firebase", note: "Real-time listeners and role-based rules." },
+    // Tools
+    { number: 19, symbol: "Gt", name: "Git", family: "tools", icon: "git", note: "GitFlow, feature branches and pull-request reviews." },
+    { number: 20, symbol: "Dk", name: "Docker", family: "tools", icon: "docker", note: "Containerising microservices." },
+    { number: 21, symbol: "K8", name: "Kubernetes", family: "tools", icon: "kubernetes", note: "Orchestrating the healthcare services." },
+    { number: 22, symbol: "Jt", name: "Jest", family: "tools", icon: "jest", note: "Unit testing." },
+    { number: 23, symbol: "Pm", name: "Postman", family: "tools", icon: "postman", note: "API testing." },
+    { number: 24, symbol: "As", name: "Android Studio", family: "tools", icon: "androidstudio", note: "Native Android development with Kotlin." },
+    // Other
+    { number: 25, symbol: "Fg", name: "Figma", family: "other", icon: "figma", note: "Wireframes and prototypes." },
+    { number: 26, symbol: "Ji", name: "Jira", family: "other", icon: "jira", note: "Two-week Scrum sprints and backlogs." },
+    { number: 27, symbol: "R", name: "R", family: "other", icon: "r", note: "Data analysis." },
   ],
 
-  // TODO: replace with your real projects
   projects: [
     {
-      title: "Project One",
-      subtitle: "a short poetic tagline",
-      role: "Full stack",
-      year: "2025",
-      category: "Web app",
+      title: "Healthcare System",
+      subtitle: "reminders that always arrive",
+      role: "Notification microservice",
+      year: "2025", // TODO: confirm year
+      category: "Microservices",
       description:
-        "Two or three sentences about what this project is, who it's for and what problem it solves. Mention the most interesting technical decision.",
-      features: ["Key feature one", "Key feature two", "Key feature three", "Key feature four"],
-      tech: ["Next.js", "TypeScript", "PostgreSQL"],
-      github: "https://github.com/pasinduNuwantha",
+        "A healthcare management system split into microservices. I built the notification service that automatically reminds patients about appointments by SMS, email and in-app messages, kept separate from the core appointment logic.",
+      features: [
+        "Multi-channel alerts with Twilio SMS and Nodemailer",
+        "Retry logic and delivery status tracking",
+        "Containerised with Docker, orchestrated on Kubernetes",
+        "GitFlow with 3 developers and code reviews",
+      ],
+      tech: ["Node.js", "Docker", "Kubernetes", "Twilio", "Nodemailer"],
+      // github: "", // TODO: add repo link if public
     },
     {
-      title: "Project Two",
-      subtitle: "another short tagline",
-      role: "Frontend",
-      year: "2025",
-      category: "Mobile-first site",
-      description: "Placeholder description for your second project.",
-      features: ["Feature one", "Feature two", "Feature three"],
-      tech: ["React", "Tailwind CSS"],
+      title: "CleanLoop App",
+      subtitle: "cleaner streets, one RSVP at a time",
+      role: "Community Volunteer module",
+      year: "2026",
+      category: "Mobile app",
+      description:
+        "A smart waste management app. I built the Community Volunteer module, where organisers create and manage clean-up campaigns and volunteers browse events and RSVP — grounded in interviews with the Minuwangoda Municipal Council chairman and local volunteers.",
+      features: [
+        "Campaigns and RSVPs synced live with Cloud Firestore",
+        "Firebase Auth and rules for 5 user roles",
+        "Tech stack chosen with weighted decision matrices",
+        "Personas and user flows from real user research",
+      ],
+      tech: ["React Native", "Expo", "Firebase", "Cloud Firestore"],
+      github: "https://github.com/SunthushGMS/CleanLoop",
     },
     {
-      title: "Project Three",
-      subtitle: "a third tagline",
-      role: "Backend",
-      year: "2024",
-      category: "API",
-      description: "Placeholder description for your third project.",
-      features: ["Feature one", "Feature two"],
-      tech: ["Node.js", "Express", "MongoDB"],
+      title: "Disaster Early Warning",
+      subtitle: "the right warning, to the right district",
+      role: "Team member", // TODO: name the use case you built (UC01–UC04)
+      year: "2026",
+      category: "Web system",
+      description:
+        "An early-warning and emergency coordination system designed for Sri Lanka's Disaster Management Centre. Officers broadcast location-targeted hazard warnings, verify citizen reports, track shelter capacity and dispatch response teams.",
+      features: [
+        "Colour-coded warnings by push, SMS and sirens",
+        "Offline-first reports with retry and back-off",
+        "Layered architecture with repositories and DI",
+        "Vitest suite with 80% coverage thresholds",
+      ],
+      tech: ["Next.js", "TypeScript", "Prisma", "Zod", "Vitest"],
+      github: "https://github.com/SunthushGMS/smart-disaster-early-warning-system",
+    },
+    {
+      title: "Calm Space",
+      subtitle: "your mood, mapped in five seconds",
+      role: "Mood tracking module",
+      year: "2026",
+      category: "Full-stack app",
+      description:
+        "A mental-wellbeing app. I built the mood tracker on the Circumplex Model of Affect, so moods are logged as a point on a valence–arousal map instead of a fixed list, then turned into insights with an AI layer.",
+      features: [
+        "Sub-5-second mood logging flow",
+        "Valence–arousal input instead of static choices",
+        "CSV and PDF export of your own data",
+        "Mood AI insights with the Google Gemini API",
+      ],
+      tech: ["React", "Node.js", "Express", "MongoDB", "Gemini API"],
+      github: "https://github.com/SunthushGMS/Calm-Space",
+    },
+    {
+      title: "CleanLoop Web",
+      subtitle: "shipped in two-week sprints",
+      role: "Volunteer module · team of 4",
+      year: "2026",
+      category: "Web platform",
+      description:
+        "The web side of CleanLoop, built by a Scrum team of four on Jira. I delivered the Volunteer module, including event RSVP, as a working end-to-end slice in the very first sprint.",
+      features: [
+        "Sprint planning, stand-ups, reviews and retros",
+        "Volunteer module with event RSVP",
+        "Introduced peer review on every pull request",
+        "Worked alongside Resident, Admin and Crew slices",
+      ],
+      tech: ["Next.js", "MongoDB", "Zod", "Jira"],
+      github: "https://github.com/SunthushGMS/cleanloop-web",
     },
   ],
 
-  // TODO: replace with your real certifications
+  // TODO: send your certifications (name, issuer, year, link)
   certifications: [
     { name: "Certification name", issuer: "Issuer", year: "2025" },
     { name: "Another certification", issuer: "Issuer", year: "2024" },
     { name: "Third certification", issuer: "Issuer", year: "2024" },
   ],
 
-  // TODO: replace with your real education & experience
   timeline: [
     {
-      year: "2021",
+      year: "2019",
       type: "education",
-      title: "Your degree",
-      org: "Your university",
-      period: "2021 — Present",
-      detail: "Short description or score.",
-      badge: "Expected 2027",
+      title: "GCE Ordinary Level",
+      org: "Thakshila College, Gampaha",
+      period: "2019",
     },
     {
-      year: "2024",
-      type: "internship",
-      title: "Software Engineering Intern",
-      org: "Company name",
-      period: "Jun 2024 — Dec 2024",
-      detail: "What you worked on and what you learned.",
+      year: "2022",
+      type: "education",
+      title: "GCE Advanced Level — Science Stream",
+      org: "Bandaranayake College, Gampaha",
+      period: "2022",
+    },
+    {
+      year: "2023",
+      type: "education",
+      title: "BSc (Hons) in Software Engineering",
+      org: "Sri Lanka Institute of Information Technology (SLIIT)",
+      period: "2023 — Present",
+      detail: "Third year. Mobile, full-stack and microservices projects in Scrum teams.",
+      badge: "Expected 2027", // TODO: confirm graduation year
     },
   ],
 
-  // TODO: replace with your real numbers
+  // TODO: send your real numbers (LeetCode, HackerRank, GitHub, hackathons…)
   achievements: {
     stats: [
       { platform: "LeetCode", icon: "leetcode", value: 100, suffix: "+", label: "Problems solved", description: "TODO: one line" },
