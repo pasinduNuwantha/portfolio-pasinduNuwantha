@@ -25,7 +25,7 @@ export function ContactForm({ email }: { email: string }) {
   };
 
   const field =
-    "mt-2 w-full rounded-2xl border border-ink/15 bg-bg/60 px-4 py-3 text-[15px] text-ink placeholder:text-muted transition-colors outline-none focus:border-ink focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
+    "mt-2 w-full rounded-2xl border border-ink/15 bg-bg/60 px-4 py-3 text-[15px] text-ink placeholder:text-muted transition-[border-color,box-shadow] outline-none focus:border-ink focus:ring-4 focus:ring-ink/10 focus-visible:outline-none";
 
   return (
     <form onSubmit={onSubmit} className="card p-6 sm:p-8" aria-describedby="contact-form-note">

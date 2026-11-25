@@ -73,11 +73,15 @@ body {
   color: var(--surface);
 }
 
-/* Visible, consistent keyboard focus */
-:focus-visible {
-  outline: 2px solid var(--ink);
-  outline-offset: 3px;
-  border-radius: 9999px;
+/* Visible, consistent keyboard focus. The outline follows each element's own
+   border-radius — never change the radius here, or fields turn into pills.
+   Lives in the base layer so Tailwind utilities (e.g. focus-visible:outline-none)
+   can override it; unlayered CSS would beat every utility. */
+@layer base {
+  :focus-visible {
+    outline: 2px solid var(--ink);
+    outline-offset: 3px;
+  }
 }
 
 /* Lenis (smooth scroll) recommended styles */
