@@ -28,7 +28,7 @@ export function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={`${label} (opens in a new tab)`}
-                  className="flex h-9 w-9 items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-ink/5 hover:text-ink"
+                  className="flex h-10 w-10 items-center justify-center rounded-full text-ink-soft transition-colors hover:bg-ink/5 hover:text-ink"
                 >
                   <Icon size={15} aria-hidden />
                 </a>
@@ -37,7 +37,7 @@ export function Footer() {
           </ul>
           <a
             href="#hero"
-            className="group inline-flex items-center gap-1.5 rounded-full font-medium text-ink transition-opacity hover:opacity-70"
+            className="group inline-flex h-10 items-center gap-1.5 rounded-full px-2 font-medium text-ink transition-opacity hover:opacity-70"
           >
             Back to top
             <ArrowUp size={14} aria-hidden className="transition-transform group-hover:-translate-y-0.5" />

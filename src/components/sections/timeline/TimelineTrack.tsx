@@ -1,9 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion, useScroll, useSpring } from "motion/react";
+import { motion, useScroll, useSpring } from "motion/react";
 import { ArrowRight } from "lucide-react";
 import { useRef } from "react";
 import type { TimelineEntry } from "@/data/content";
+import { useReducedMotionProgress } from "@/lib/motion";
 
 const TYPE_LABEL: Record<TimelineEntry["type"], string> = {
   education: "Education",
@@ -22,9 +23,10 @@ const EASE = [0.22, 1, 0.36, 1] as const;
  */
 export function TimelineTrack({ entries, availability }: { entries: TimelineEntry[]; availability: string }) {
   const ref = useRef<HTMLDivElement>(null);
-  const reduce = useReducedMotion();
   const { scrollYProgress } = useScroll({ target: ref, offset: ["start 75%", "end 60%"] });
-  const scaleY = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+  const spring = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
+  // Reduced motion: the line is simply fully drawn.
+  const scaleY = useReducedMotionProgress(spring);
 
   return (
     <div ref={ref} className="relative mt-16 sm:mt-20">
@@ -32,7 +34,7 @@ export function TimelineTrack({ entries, availability }: { entries: TimelineEntr
       <div aria-hidden className="absolute top-2 bottom-2 left-[7px] w-px bg-ink/10 md:left-1/2 md:-translate-x-1/2">
         <motion.div
           className="absolute inset-0 origin-top bg-ink"
-          style={reduce ? undefined : { scaleY }}
+          style={{ scaleY }}
         />
       </div>
 
@@ -102,7 +104,7 @@ export function TimelineTrack({ entries, availability }: { entries: TimelineEntr
               <p className="mt-2 text-sm text-ink-soft">{availability}</p>
               <a
                 href="#contact"
-                className="group mt-5 inline-flex items-center gap-2 rounded-full bg-ink px-4 py-2 text-sm font-medium text-surface transition-colors hover:bg-ink/85"
+                className="group mt-5 inline-flex h-11 items-center gap-2 rounded-full bg-ink px-5 text-sm font-medium text-surface transition-colors hover:bg-ink/85"
               >
                 Let&apos;s talk
                 <ArrowRight size={14} aria-hidden className="transition-transform group-hover:translate-x-0.5" />

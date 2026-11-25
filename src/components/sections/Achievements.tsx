@@ -42,7 +42,7 @@ export function Achievements() {
       {/* Stat cards: swipeable row on small screens, grid on desktop */}
       <Reveal
         as="ul"
-        className="-mx-4 mt-12 flex snap-x snap-mandatory gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:-mx-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0"
+        className="-mx-4 mt-12 flex snap-x snap-mandatory scroll-px-4 gap-4 overflow-x-auto px-4 pb-4 [scrollbar-width:none] sm:-mx-8 sm:scroll-px-8 sm:px-8 lg:mx-0 lg:grid lg:grid-cols-4 lg:overflow-visible lg:px-0 lg:pb-0"
       >
         {stats.map((stat) => (
           <RevealItem as="li" key={stat.label} className="w-[78%] shrink-0 snap-start sm:w-[45%] lg:w-auto">
