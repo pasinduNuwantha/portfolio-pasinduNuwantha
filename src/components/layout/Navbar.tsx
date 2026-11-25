@@ -2,11 +2,8 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import { Menu, X } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
-import { content, type SectionId } from "@/data/content";
-
-const { nav, site } = content;
-const NAV_IDS = nav.map((n) => n.id);
+import { useEffect, useMemo, useRef, useState } from "react";
+import type { NavItem, SectionId } from "@/data/content";
 
 /**
  * Scroll-spy: the active section is the last nav section whose top has
@@ -49,8 +46,13 @@ function useActiveSection(ids: SectionId[]) {
 
 const pillTransition = { type: "spring", stiffness: 380, damping: 32 } as const;
 
-export function Navbar() {
-  const active = useActiveSection(NAV_IDS);
+/**
+ * Receives only what it needs as props — importing `content` here would ship
+ * the whole content file to the browser as JavaScript.
+ */
+export function Navbar({ nav, siteName }: { nav: NavItem[]; siteName: string }) {
+  const navIds = useMemo(() => nav.map((n) => n.id), [nav]);
+  const active = useActiveSection(navIds);
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -86,7 +88,7 @@ export function Navbar() {
           href="#hero"
           className="pointer-events-auto flex h-11 items-center rounded-full border border-border bg-surface/70 px-4 text-sm font-semibold tracking-tight text-ink shadow-soft backdrop-blur-md"
         >
-          {site.name}
+          {siteName}
           <span className="font-serif font-normal text-ink-soft italic">.</span>
         </a>
 
