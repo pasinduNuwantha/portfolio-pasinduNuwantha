@@ -5,6 +5,8 @@
  * Anything marked `// TODO` is placeholder content waiting for real details.
  */
 
+import type { BrandIconSlug } from "@/lib/brandIcons";
+
 /* ------------------------------------------------------------------ */
 /* Types                                                               */
 /* ------------------------------------------------------------------ */
@@ -74,7 +76,7 @@ export type Skill = {
   /** One line shown in the detail panel */
   note: string;
   /** Simple Icons slug, e.g. "python", "nextdotjs" (mapped to a logo in the Skills section) */
-  icon: string;
+  icon: BrandIconSlug;
 };
 
 export type Project = {
@@ -113,7 +115,7 @@ export type Achievements = {
   stats: {
     platform: string;
     /** Simple Icons slug, e.g. "leetcode" */
-    icon: string;
+    icon: BrandIconSlug;
     value: number;
     suffix: string;
     label: string;
