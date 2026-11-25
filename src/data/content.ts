@@ -159,7 +159,7 @@ export const content: Content = {
       "Pasindu Nuwantha — Software Engineering undergraduate at SLIIT building mobile and full-stack applications with React Native, the MERN stack, Docker and Kubernetes.",
     socials: {
       github: "https://github.com/pasinduNuwantha",
-      linkedin: "https://www.linkedin.com/in/pasindu-nuwantha", // TODO: confirm this URL opens your profile
+      linkedin: "https://www.linkedin.com/in/pasindu-nuwantha-111267283",
       // x: "https://x.com/your-handle", // optional
       // instagram: "https://instagram.com/your-handle", // optional
     },
