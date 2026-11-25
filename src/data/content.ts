@@ -199,7 +199,7 @@ export const content: Content = {
       { label: "Open to", value: "SE internships" },
       { label: "Off-screen", value: "Karate · Leo Club · travel" },
     ],
-    quote: "Talk to real users first — then let the code prove it.", // TODO: change to your own words if you like
+    quote: "Talk to real users first — then let the code prove it.", // TODO: replace with your own quote
   },
 
   // Numbers are just display order. Notes show in the Skills detail panel.
@@ -244,7 +244,7 @@ export const content: Content = {
       title: "Healthcare System",
       subtitle: "reminders that always arrive",
       role: "Notification microservice",
-      year: "2025", // TODO: confirm year
+      year: "2026",
       category: "Microservices",
       description:
         "A healthcare management system split into microservices. I built the notification service that automatically reminds patients about appointments by SMS, email and in-app messages, kept separate from the core appointment logic.",
@@ -255,7 +255,7 @@ export const content: Content = {
         "GitFlow with 3 developers and code reviews",
       ],
       tech: ["Node.js", "Docker", "Kubernetes", "Twilio", "Nodemailer"],
-      // github: "", // TODO: add repo link if public
+      // github: "", // add the repo link here if it becomes public
     },
     {
       title: "CleanLoop App",
@@ -277,15 +277,15 @@ export const content: Content = {
     {
       title: "Disaster Early Warning",
       subtitle: "the right warning, to the right district",
-      role: "Team member", // TODO: name the use case you built (UC01–UC04)
+      role: "Hazard reporting & verification",
       year: "2026",
       category: "Web system",
       description:
-        "An early-warning and emergency coordination system designed for Sri Lanka's Disaster Management Centre. Officers broadcast location-targeted hazard warnings, verify citizen reports, track shelter capacity and dispatch response teams.",
+        "An early-warning and emergency coordination system designed for Sri Lanka's Disaster Management Centre. I built the ground hazard report flow: citizens and volunteers report hazards with a photo and GPS location, even offline, and duty officers verify, reject or mark them as duplicates.",
       features: [
-        "Colour-coded warnings by push, SMS and sirens",
-        "Offline-first reports with retry and back-off",
-        "Layered architecture with repositories and DI",
+        "Hazard reports with photo and GPS location",
+        "Offline-first queue with retry and back-off",
+        "Officer review: verify, reject or mark duplicate",
         "Vitest suite with 80% coverage thresholds",
       ],
       tech: ["Next.js", "TypeScript", "Prisma", "Zod", "Vitest"],
@@ -322,7 +322,7 @@ export const content: Content = {
         "Introduced peer review on every pull request",
         "Worked alongside Resident, Admin and Crew slices",
       ],
-      tech: ["Next.js", "MongoDB", "Zod", "Jira"],
+      tech: ["Scrum", "Jira"],
       github: "https://github.com/SunthushGMS/cleanloop-web",
     },
   ],
@@ -356,7 +356,7 @@ export const content: Content = {
       org: "Sri Lanka Institute of Information Technology (SLIIT)",
       period: "2023 — Present",
       detail: "Third year. Mobile, full-stack and microservices projects in Scrum teams.",
-      badge: "Expected 2027", // TODO: confirm graduation year
+      badge: "Expected 2027",
     },
   ],
 
