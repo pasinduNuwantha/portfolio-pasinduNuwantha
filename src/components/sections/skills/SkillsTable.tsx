@@ -1,15 +1,15 @@
 "use client";
 
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useMemo, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import type { Skill, SkillFamily } from "@/data/content";
-import { brandIcons } from "@/lib/brandIcons";
 import { SKILL_FAMILIES, familyById, periodicLayout } from "@/lib/skillFamilies";
 import { ElementTile } from "@/components/ui/ElementTile";
 
 type Filter = SkillFamily | "all";
 
-export function SkillsTable({ skills }: { skills: Skill[] }) {
+/** `logos` are brand logos pre-rendered on the server, keyed by skill name. */
+export function SkillsTable({ skills, logos }: { skills: Skill[]; logos: Record<string, ReactNode> }) {
   const { placed, rows, columns } = useMemo(() => periodicLayout(skills), [skills]);
   const [filter, setFilter] = useState<Filter>("all");
   const [activeName, setActiveName] = useState<string | null>(null);
@@ -90,7 +90,7 @@ export function SkillsTable({ skills }: { skills: Skill[] }) {
                 transition={{ duration: 0.22, ease: [0.22, 1, 0.36, 1] }}
                 className="flex flex-1 flex-col"
               >
-                <Detail skill={active} />
+                <Detail skill={active} logo={logos[active.name]} />
               </motion.div>
             ) : (
               <motion.div
@@ -118,17 +118,15 @@ export function SkillsTable({ skills }: { skills: Skill[] }) {
   );
 }
 
-function Detail({ skill }: { skill: Skill }) {
+function Detail({ skill, logo }: { skill: Skill; logo: ReactNode }) {
   const family = familyById[skill.family];
-  const brand = brandIcons[skill.icon];
-  const Icon = brand.Icon;
 
   // Mobile: logo left, text right. Desktop: stacked card.
   return (
     <div className="flex gap-4 lg:flex-col lg:gap-0">
       <div className="flex shrink-0 items-start justify-between">
         <div className="flex h-16 w-16 items-center justify-center rounded-2xl border border-border bg-white shadow-[0_1px_2px_rgba(30,35,51,0.05)] lg:h-20 lg:w-20">
-          <Icon className="h-9 w-9 lg:h-11 lg:w-11" color={brand.color} aria-hidden />
+          {logo}
         </div>
         <div
           aria-hidden
