@@ -123,7 +123,9 @@ export function ProjectsAccordion({ projects }: { projects: Project[] }) {
                   aria-controls={panelId}
                   className="flex w-full items-center gap-4 rounded-3xl p-5 text-left"
                 >
-                  <span className="font-mono text-xs text-muted">{pad(i + 1)}</span>
+                  <span aria-hidden className="font-mono text-xs text-muted">
+                    {pad(i + 1)}
+                  </span>
                   <span className="min-w-0 flex-1">
                     <span className="block text-xl font-semibold tracking-tight text-ink">{project.title}</span>
                     <span className="block truncate font-serif text-lg text-ink-soft italic">{project.subtitle}</span>

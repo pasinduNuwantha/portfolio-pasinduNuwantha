@@ -22,7 +22,7 @@ export function ScrollRevealHeading({ lead, accent, id }: { lead: string; accent
       id={id}
       className="text-[clamp(3rem,10vw,8.5rem)] leading-[0.9] font-semibold tracking-[-0.05em] text-balance text-ink"
     >
-      <span className="block">{lead}</span>
+      <span className="block">{lead}</span>{" "}
       <span className="block pb-[0.08em] font-serif font-normal tracking-[-0.02em] text-ink-soft italic">
         {words.map((word, i) => (
           <Word key={`${word}-${i}`} progress={progress} range={[i / words.length, (i + 1) / words.length]}>
@@ -44,8 +44,10 @@ function Word({
   progress: MotionValue<number>;
   range: [number, number];
 }) {
-  const opacity = useTransform(progress, range, [0.12, 1]);
-  const filter = useTransform(progress, range, ["blur(10px)", "blur(0px)"]);
+  // The blur does most of the work; opacity starts at 0.75 so even the
+  // un-scrolled state keeps 3:1 contrast for large text (WCAG AA).
+  const opacity = useTransform(progress, range, [0.75, 1]);
+  const filter = useTransform(progress, range, ["blur(12px)", "blur(0px)"]);
   return (
     <motion.span style={{ opacity, filter }} className="inline-block whitespace-pre">
       {children}

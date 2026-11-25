@@ -143,7 +143,7 @@ export function LanyardBadge({ title, items, signature, strapText, footnote }: L
           aria-hidden
           className="relative flex h-24 w-5 justify-center overflow-hidden rounded-b-sm bg-ink shadow-[inset_0_0_0_1px_rgba(255,255,255,0.06)] sm:h-32"
         >
-          <span className="pt-2 font-mono text-[7px] leading-none tracking-[0.3em] whitespace-nowrap text-surface/45 uppercase [writing-mode:vertical-rl]">
+          <span className="pt-2 font-mono text-[7px] leading-none tracking-[0.3em] whitespace-nowrap text-surface/60 uppercase [writing-mode:vertical-rl]">
             {`${strapText} · `.repeat(4)}
           </span>
         </div>
