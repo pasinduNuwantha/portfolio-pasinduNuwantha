@@ -170,7 +170,7 @@ function Chip({
       type="button"
       onClick={onClick}
       aria-pressed={pressed}
-      className={`inline-flex h-9 items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors duration-300 ${
+      className={`inline-flex h-10 items-center gap-2 rounded-full border px-3.5 text-sm font-medium transition-colors duration-300 ${
         pressed
           ? "border-ink bg-ink text-surface"
           : "border-ink/15 bg-surface/60 text-ink hover:border-ink/40"

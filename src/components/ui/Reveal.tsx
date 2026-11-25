@@ -22,7 +22,11 @@ type RevealProps = {
   className?: string;
   /** Seconds between each <RevealItem> child */
   stagger?: number;
-  /** How much of the element must be visible before revealing (0–1) */
+  /**
+   * How much of the element must be visible before revealing (0–1).
+   * Default: reveal as soon as its top is 12% into the screen — works for
+   * very tall blocks (a ratio like 0.2 would wait too long on mobile).
+   */
   amount?: number;
   as?: "div" | "section" | "ul" | "ol" | "header";
 };
@@ -30,13 +34,14 @@ type RevealProps = {
 /**
  * Fades + slides children up as they enter the viewport (once).
  * Wrap individual pieces in <RevealItem> to stagger them.
- * Reduced motion is handled globally by <MotionConfig reducedMotion="user">.
+ * Reduced motion is handled globally by <MotionConfig reducedMotion="user">
+ * (the slide is dropped, only the fade remains).
  */
 export function Reveal({
   children,
   className,
   stagger = 0.08,
-  amount = 0.2,
+  amount,
   as = "div",
 }: RevealProps) {
   const Tag = motion[as];
@@ -47,7 +52,7 @@ export function Reveal({
       custom={stagger}
       initial="hidden"
       whileInView="visible"
-      viewport={{ once: true, amount }}
+      viewport={amount === undefined ? { once: true, margin: "0px 0px -12% 0px" } : { once: true, amount }}
     >
       {children}
     </Tag>

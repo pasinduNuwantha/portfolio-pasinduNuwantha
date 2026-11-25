@@ -46,7 +46,7 @@ export function Hero() {
                 <span className="block animate-rise" style={{ animationDelay: "300ms" }}>
                   {site.title[0]}
                 </span>
-              </span>
+              </span>{" "}
               <span className="-mt-[0.06em] block overflow-hidden pb-[0.12em]">
                 <span
                   className="block animate-rise font-serif font-normal tracking-[-0.02em] text-ink-soft italic"

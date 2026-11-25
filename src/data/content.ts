@@ -39,6 +39,10 @@ export type Site = {
   location: string;
   email: string;
   resumeUrl: string;
+  /** One line about what you're looking for (shown at the end of the timeline) */
+  availability: string;
+  /** Short line under the Contact heading */
+  contactIntro: string;
   /** Used for metadata, sitemap and Open Graph */
   url: string;
   description: string;
@@ -103,7 +107,7 @@ export type Certification = {
 
 export type TimelineEntry = {
   year: string;
-  type: "education" | "experience" | "internship";
+  type: "education" | "experience" | "internship" | "project" | "activity";
   title: string;
   org: string;
   period: string;
@@ -113,19 +117,26 @@ export type TimelineEntry = {
 
 export type Achievements = {
   stats: {
+    /** Where the number comes from, e.g. "GitHub" or "Portfolio" */
     platform: string;
-    /** Simple Icons slug, e.g. "leetcode" */
-    icon: BrandIconSlug;
+    /** Brand logo (Simple Icons slug). Leave out to show `symbol` as an element tile instead. */
+    icon?: BrandIconSlug;
+    /** Two-letter tile shown when there's no brand logo, e.g. "Pr" */
+    symbol?: string;
     value: number;
     suffix: string;
     label: string;
     description: string;
   }[];
+  /**
+   * Big-number ranking cards ("No. 1", "Top 100") or word highlights ("Diploma").
+   * `prefix` is optional — leave it out for word highlights.
+   */
   rankings: {
     rank: string;
-    prefix: "No." | "Top";
+    prefix?: "No." | "Top";
     event: string;
-    year: string;
+    year?: string;
     description: string;
   }[];
 };
@@ -156,6 +167,9 @@ export const content: Content = {
     location: "Gampaha, Sri Lanka",
     email: "pasindunuwantha19@gmail.com",
     resumeUrl: "/resume.pdf",
+    availability: "I'm looking for a software engineering internship.",
+    contactIntro:
+      "Have an internship, a project or just a question? My inbox is always open — I'll get back to you soon.",
     url: "https://portfolio-pasindu-nuwantha.vercel.app", // TODO: update after first Vercel deploy
     description:
       "Pasindu Nuwantha — Software Engineering undergraduate at SLIIT building mobile and full-stack applications with React Native, the MERN stack, Docker and Kubernetes.",
@@ -329,11 +343,8 @@ export const content: Content = {
     },
   ],
 
-  // TODO: send your certifications (name, issuer, year, link)
   certifications: [
-    { name: "Certification name", issuer: "Issuer", year: "2025" },
-    { name: "Another certification", issuer: "Issuer", year: "2024" },
-    { name: "Third certification", issuer: "Issuer", year: "2024" },
+    { name: "Indexing Design Fundamentals", issuer: "MongoDB", year: "2026" },
   ],
 
   timeline: [
@@ -360,17 +371,47 @@ export const content: Content = {
       detail: "Third year. Mobile, full-stack and microservices projects in Scrum teams.",
       badge: "Expected 2027",
     },
+    {
+      year: "2023", // TODO: the year you joined Leo Club
+      type: "activity",
+      title: "Leo Club member",
+      org: "Leo Club of SLIIT",
+      period: "Active member",
+      detail: "Community service projects and leadership activities.",
+    },
+    {
+      year: "2026",
+      type: "project",
+      title: "Notification microservice",
+      org: "Healthcare System · team of 4",
+      period: "2026",
+      detail: "Built the multi-channel reminder service, containerised on Docker and Kubernetes, with GitFlow and code reviews.",
+    },
+    {
+      year: "2026",
+      type: "project",
+      title: "Scrum developer",
+      org: "CleanLoop · team of 4",
+      period: "2026",
+      detail: "Two-week sprints on Jira. Shipped the Volunteer module end-to-end in sprint one and introduced peer review on every PR.",
+      badge: "Sprint 1 delivery",
+    },
   ],
 
-  // TODO: send your real numbers (LeetCode, HackerRank, GitHub, hackathons…)
   achievements: {
+    // GitHub numbers from github.com/pasinduNuwantha — update them now and then.
     stats: [
-      { platform: "LeetCode", icon: "leetcode", value: 100, suffix: "+", label: "Problems solved", description: "TODO: one line" },
-      { platform: "GitHub", icon: "github", value: 20, suffix: "+", label: "Repositories", description: "TODO: one line" },
+      { platform: "GitHub", icon: "github", value: 159, suffix: "", label: "Contributions", description: "Commits, pull requests and reviews in the last year." },
+      { platform: "GitHub", icon: "github", value: 24, suffix: "", label: "Pull requests", description: "Opened across team projects, with peer review." },
+      { platform: "Portfolio", symbol: "Pr", value: 5, suffix: "", label: "Projects built", description: "Mobile, web and microservices, all in real teams." },
+      { platform: "Portfolio", symbol: "Tc", value: 27, suffix: "", label: "Technologies", description: "From React Native to Kubernetes — see the table above." },
     ],
+    // No competitions yet, so these are word highlights (no prefix). Add rankings like
+    // { prefix: "No.", rank: "1", event: "Hackathon", year: "2027", description: "…" } later.
     rankings: [
-      { rank: "1", prefix: "No.", event: "Hackathon name", year: "2025", description: "TODO: short description" },
-      { rank: "100", prefix: "Top", event: "Competition name", year: "2024", description: "TODO: short description" },
+      { rank: "Diploma", event: "Karate", description: "Diploma holder — the sport that taught me discipline, focus and perseverance." },
+      { rank: "Member", event: "Leo Club, SLIIT", description: "Community service and leadership alongside my degree." },
+      { rank: "Certified", event: "MongoDB · Indexing Design", year: "2026", description: "Proof of completion for Indexing Design Fundamentals, issued by MongoDB." },
     ],
   },
 };
