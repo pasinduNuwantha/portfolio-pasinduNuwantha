@@ -9,13 +9,20 @@ type SectionProps = {
   children: ReactNode;
 };
 
-/** Consistent outer spacing + anchor id for every page section. */
+/**
+ * Consistent outer spacing + anchor id for every page section.
+ *
+ * `content-visibility: auto` lets the browser skip layout and paint for
+ * sections that are off-screen (a big win for first load on slow phones).
+ * `contain-intrinsic-size: auto <h>` reserves an estimated height until the
+ * section has rendered once, then remembers its real height.
+ */
 export function Section({ id, labelledBy, className = "", children }: SectionProps) {
   return (
     <section
       id={id}
       aria-labelledby={labelledBy}
-      className={`relative scroll-mt-4 py-24 sm:py-32 ${className}`}
+      className={`relative scroll-mt-4 py-24 [content-visibility:auto] [contain-intrinsic-size:auto_1100px] sm:py-32 ${className}`}
     >
       <div className="container-page">{children}</div>
     </section>
