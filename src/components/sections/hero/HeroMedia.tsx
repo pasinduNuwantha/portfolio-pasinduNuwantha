@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { useReducedMotion } from "motion/react";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 type HeroMediaProps = {
   webm?: string;
@@ -22,6 +22,16 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
   const reduce = useReducedMotion();
   const initial: Mode = webm || mp4 ? "video" : poster ? "poster" : "placeholder";
   const [mode, setMode] = useState<Mode>(initial);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  // The server renders autoPlay (it can't know the visitor's setting), so
+  // pause explicitly once we know reduced motion is on.
+  useEffect(() => {
+    const v = videoRef.current;
+    if (!v) return;
+    if (reduce) v.pause();
+    else v.play().catch(() => {});
+  }, [reduce, mode]);
 
   const fallBack = () => setMode((m) => (m === "video" && poster ? "poster" : "placeholder"));
 
@@ -33,8 +43,9 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
       <div className="relative aspect-[9/16] h-full max-w-full">
         {mode === "video" && (
           <video
+            ref={videoRef}
             className="h-full w-full object-contain mix-blend-multiply"
-            autoPlay={!reduce}
+            autoPlay
             muted
             loop
             playsInline
