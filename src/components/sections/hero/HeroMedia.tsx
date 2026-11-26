@@ -38,25 +38,30 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+
+    // Mirror the element's real state. Autoplay often starts before React is
+    // ready, so we also sync once on the next frame instead of trusting events.
+    const sync = () => {
+      setPlaying(!v.paused && !v.ended);
+      if (!v.paused || v.currentTime > 0) setHasPlayed(true);
+    };
+    const events = ["play", "playing", "pause", "ended"] as const;
+    events.forEach((ev) => v.addEventListener(ev, sync));
+    // A timer (not requestAnimationFrame) so it also runs in background tabs.
+    const timer = setTimeout(sync, 0);
+
     if (reduce) {
       v.pause();
       v.currentTime = 0;
-      setPlaying(false);
     } else {
-      // Autoplay often starts before React attaches onPlay, so read the
-      // element's real state instead of waiting for an event we missed.
-      if (!v.paused || v.currentTime > 0) setHasPlayed(true);
-      setPlaying(!v.paused && !v.ended);
       v.muted = true;
-      if (!v.ended) {
-        v.play()
-          .then(() => {
-            setPlaying(true);
-            setHasPlayed(true);
-          })
-          .catch(() => {});
-      }
+      if (!v.ended) v.play().catch(() => {});
     }
+
+    return () => {
+      events.forEach((ev) => v.removeEventListener(ev, sync));
+      clearTimeout(timer);
+    };
   }, [reduce, mode]);
 
   const replay = () => {
@@ -94,12 +99,6 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
               poster={poster}
               aria-label={alt}
               disablePictureInPicture
-              onPlay={() => {
-                setPlaying(true);
-                setHasPlayed(true);
-              }}
-              onPause={() => setPlaying(false)}
-              onEnded={() => setPlaying(false)}
             >
               {webm && <source src={webm} type="video/webm" onError={mp4 ? undefined : fallBack} />}
               {mp4 && <source src={mp4} type="video/mp4" onError={fallBack} />}
