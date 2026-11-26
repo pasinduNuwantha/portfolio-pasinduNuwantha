@@ -1,3 +1,5 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { content } from "@/data/content";
 import { Button } from "@/components/ui/Button";
@@ -9,6 +11,9 @@ import { SectionHeading } from "@/components/ui/SectionHeading";
 const { site, about } = content;
 
 export function About() {
+  // Only reference the photo if it's actually in /public (otherwise the badge shows initials).
+  const photo = existsSync(path.join(process.cwd(), "public", about.idCard.photo)) ? about.idCard.photo : undefined;
+
   return (
     <Section id="about" labelledBy="about-heading">
       <div className="grid items-start gap-16 lg:grid-cols-[minmax(0,1fr)_auto_minmax(0,0.75fr)] lg:gap-12 xl:gap-16">
@@ -53,6 +58,7 @@ export function About() {
             signature={site.name}
             strapText={site.name}
             footnote={site.location}
+            idCard={{ ...about.idCard, name: site.name, photo }}
           />
         </div>
 

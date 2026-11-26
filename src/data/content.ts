@@ -60,6 +60,15 @@ export type About = {
   whatIAm: { label: string; sub: string }[];
   facts: { label: string; value: string }[];
   quote: string;
+  /** Front of the flipping lanyard badge (the back shows `whatIAm`). */
+  idCard: {
+    /** Path under /public. If the file is missing, your initials are shown instead. */
+    photo: string;
+    role: string;
+    idNumber: string;
+    department: string;
+    validTill: string;
+  };
 };
 
 export type SkillFamily =
@@ -216,6 +225,13 @@ export const content: Content = {
       { label: "Off-screen", value: "Karate · Leo Club · travel" },
     ],
     quote: "Talk to real users first — then let the code prove it.", // TODO: replace with your own quote
+    idCard: {
+      photo: "/about/photo.jpg", // TODO: add your photo (portrait, ~600×750px)
+      role: "Full Stack Developer",
+      idNumber: "PN-2023",
+      department: "Software Engineering",
+      validTill: "2027",
+    },
   },
 
   // Numbers are just display order. Notes show in the Skills detail panel.
