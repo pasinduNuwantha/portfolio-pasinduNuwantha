@@ -20,9 +20,8 @@ type Mode = "video" | "poster" | "placeholder";
  * `feather-edges` fades the media's edges so its background melts into --bg
  * (works whatever colour the video background is).
  *
- * The video plays once (muted — browsers block autoplay with sound), then a
- * Replay button appears. The speaker button turns sound on; because that's a
- * click, browsers allow the audio. Reduced motion: no autoplay, just Play.
+ * The video plays once, then a Replay button appears. Sound comes on as early as the browser allows (see the
+ * effect below); the speaker button toggles it. Reduced motion: no autoplay, just Play.
  */
 export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
   const reduce = useReducedMotion();
@@ -32,46 +31,81 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
   const [playing, setPlaying] = useState(false);
   const [hasPlayed, setHasPlayed] = useState(false);
   const [muted, setMuted] = useState(true);
+  /** Set once the visitor uses the speaker button — their choice always wins. */
+  const soundChoice = useRef<"on" | "off" | null>(null);
 
   // The server renders autoPlay (it can't know the visitor's setting), so
-  // decide here: play once, muted — or stay paused with reduced motion.
+  // decide here: play once — or stay paused with reduced motion.
+  //
+  // Sound: browsers only allow audio after the visitor has clicked, tapped or
+  // pressed a key on the page. So we (1) try to start WITH sound — some
+  // browsers allow it, e.g. Chrome for sites you often play media on — and if
+  // that's refused, start muted; then (2) turn the sound on at the visitor's
+  // first click/tap/keypress while the video is still playing.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
+
+    // Mirror the element's real state. Autoplay often starts before React is
+    // ready, so we also sync once via a timer instead of trusting events.
+    const sync = () => {
+      setPlaying(!v.paused && !v.ended);
+      if (!v.paused || v.currentTime > 0) setHasPlayed(true);
+      setMuted(v.muted);
+    };
+    const events = ["play", "playing", "pause", "ended", "volumechange"] as const;
+    events.forEach((ev) => v.addEventListener(ev, sync));
+    // A timer (not requestAnimationFrame) so it also runs in background tabs.
+    const timer = setTimeout(sync, 0);
+
     if (reduce) {
       v.pause();
       v.currentTime = 0;
-      setPlaying(false);
-    } else {
-      // Autoplay often starts before React attaches onPlay, so read the
-      // element's real state instead of waiting for an event we missed.
-      if (!v.paused || v.currentTime > 0) setHasPlayed(true);
-      setPlaying(!v.paused && !v.ended);
-      v.muted = true;
-      if (!v.ended) {
-        v.play()
-          .then(() => {
-            setPlaying(true);
-            setHasPlayed(true);
-          })
-          .catch(() => {});
-      }
+    } else if (!v.ended) {
+      v.muted = false;
+      v.play().catch(() => {
+        // Sound not allowed yet — play silently instead.
+        v.muted = true;
+        v.play().catch(() => {});
+      });
     }
+
+    // First real interaction anywhere (except our own controls) → sound on.
+    // `click` and `keydown` count as user activation in every browser;
+    // scrolling doesn't, so it can't be used.
+    const unmuteOnFirstInteraction = (e: Event) => {
+      if ((e.target as Element | null)?.closest?.("[data-hero-controls]")) return;
+      if (soundChoice.current !== "off" && v.muted && !v.paused && !v.ended) v.muted = false;
+      window.removeEventListener("click", unmuteOnFirstInteraction, true);
+      window.removeEventListener("keydown", unmuteOnFirstInteraction, true);
+    };
+    if (!reduce) {
+      window.addEventListener("click", unmuteOnFirstInteraction, true);
+      window.addEventListener("keydown", unmuteOnFirstInteraction, true);
+    }
+
+    return () => {
+      events.forEach((ev) => v.removeEventListener(ev, sync));
+      clearTimeout(timer);
+      window.removeEventListener("click", unmuteOnFirstInteraction, true);
+      window.removeEventListener("keydown", unmuteOnFirstInteraction, true);
+    };
   }, [reduce, mode]);
 
+  // Replay is a click, so sound is allowed — use it unless the visitor muted on purpose.
   const replay = () => {
     const v = videoRef.current;
     if (!v) return;
     v.currentTime = 0;
-    v.muted = muted;
+    v.muted = soundChoice.current === "off";
     v.play().catch(() => {});
   };
 
   const toggleSound = () => {
     const v = videoRef.current;
-    const next = !muted;
-    setMuted(next);
-    if (v) v.muted = next;
+    if (!v) return;
+    v.muted = !v.muted; // the volumechange listener updates the icon
+    soundChoice.current = v.muted ? "off" : "on";
   };
 
   const fallBack = () => setMode((m) => (m === "video" && poster ? "poster" : "placeholder"));
@@ -94,12 +128,6 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
               poster={poster}
               aria-label={alt}
               disablePictureInPicture
-              onPlay={() => {
-                setPlaying(true);
-                setHasPlayed(true);
-              }}
-              onPause={() => setPlaying(false)}
-              onEnded={() => setPlaying(false)}
             >
               {webm && <source src={webm} type="video/webm" onError={mp4 ? undefined : fallBack} />}
               {mp4 && <source src={mp4} type="video/mp4" onError={fallBack} />}
@@ -108,7 +136,7 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
             {/* Controls — outside the feathered video so they stay crisp */}
             {/* Phones: top-right corner (always empty background, never hits the text
                 below whatever the screen height). Desktop: lower-left corner. */}
-            <div className="pointer-events-auto absolute top-[2%] right-0 flex flex-col items-center gap-2 md:top-auto md:right-auto md:bottom-[3%] md:left-[4%] md:flex-row">
+            <div data-hero-controls className="pointer-events-auto absolute top-[2%] right-0 flex flex-col items-center gap-2 md:top-auto md:right-auto md:bottom-[3%] md:left-[4%] md:flex-row">
               {!playing && (
                 <button
                   type="button"
