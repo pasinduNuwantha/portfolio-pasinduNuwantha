@@ -226,7 +226,7 @@ export const content: Content = {
     ],
     quote: "Talk to real users first — then let the code prove it.", // TODO: replace with your own quote
     idCard: {
-      photo: "/about/photo.jpg", // TODO: add your photo (portrait, ~600×750px)
+      photo: "/about/photo.jpg", // portrait, 4:5 (600×750)
       role: "Full Stack Developer",
       idNumber: "PN-2023",
       department: "Software Engineering",
