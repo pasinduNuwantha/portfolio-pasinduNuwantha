@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useReducedMotion } from "motion/react";
+import { Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 
 type HeroMediaProps = {
@@ -18,21 +19,60 @@ type Mode = "video" | "poster" | "placeholder";
  * Fallback chain: video → poster image → placeholder silhouette.
  * `feather-edges` fades the media's edges so its background melts into --bg
  * (works whatever colour the video background is).
+ *
+ * The video plays once (muted — browsers block autoplay with sound), then a
+ * Replay button appears. The speaker button turns sound on; because that's a
+ * click, browsers allow the audio. Reduced motion: no autoplay, just Play.
  */
 export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
   const reduce = useReducedMotion();
   const initial: Mode = webm || mp4 ? "video" : poster ? "poster" : "placeholder";
   const [mode, setMode] = useState<Mode>(initial);
   const videoRef = useRef<HTMLVideoElement>(null);
+  const [playing, setPlaying] = useState(false);
+  const [hasPlayed, setHasPlayed] = useState(false);
+  const [muted, setMuted] = useState(true);
 
   // The server renders autoPlay (it can't know the visitor's setting), so
-  // pause explicitly once we know reduced motion is on.
+  // decide here: play once, muted — or stay paused with reduced motion.
   useEffect(() => {
     const v = videoRef.current;
     if (!v) return;
-    if (reduce) v.pause();
-    else v.play().catch(() => {});
+    if (reduce) {
+      v.pause();
+      v.currentTime = 0;
+      setPlaying(false);
+    } else {
+      // Autoplay often starts before React attaches onPlay, so read the
+      // element's real state instead of waiting for an event we missed.
+      if (!v.paused || v.currentTime > 0) setHasPlayed(true);
+      setPlaying(!v.paused && !v.ended);
+      v.muted = true;
+      if (!v.ended) {
+        v.play()
+          .then(() => {
+            setPlaying(true);
+            setHasPlayed(true);
+          })
+          .catch(() => {});
+      }
+    }
   }, [reduce, mode]);
+
+  const replay = () => {
+    const v = videoRef.current;
+    if (!v) return;
+    v.currentTime = 0;
+    v.muted = muted;
+    v.play().catch(() => {});
+  };
+
+  const toggleSound = () => {
+    const v = videoRef.current;
+    const next = !muted;
+    setMuted(next);
+    if (v) v.muted = next;
+  };
 
   const fallBack = () => setMode((m) => (m === "video" && poster ? "poster" : "placeholder"));
 
@@ -43,21 +83,54 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
     >
       <div className="relative aspect-[9/16] h-full max-w-full">
         {mode === "video" && (
-          <video
-            ref={videoRef}
-            className="feather-edges h-full w-full object-contain"
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="metadata"
-            poster={poster}
-            aria-label={alt}
-            disablePictureInPicture
-          >
-            {webm && <source src={webm} type="video/webm" onError={mp4 ? undefined : fallBack} />}
-            {mp4 && <source src={mp4} type="video/mp4" onError={fallBack} />}
-          </video>
+          <>
+            <video
+              ref={videoRef}
+              className="feather-edges h-full w-full object-contain"
+              autoPlay
+              muted
+              playsInline
+              preload="metadata"
+              poster={poster}
+              aria-label={alt}
+              disablePictureInPicture
+              onPlay={() => {
+                setPlaying(true);
+                setHasPlayed(true);
+              }}
+              onPause={() => setPlaying(false)}
+              onEnded={() => setPlaying(false)}
+            >
+              {webm && <source src={webm} type="video/webm" onError={mp4 ? undefined : fallBack} />}
+              {mp4 && <source src={mp4} type="video/mp4" onError={fallBack} />}
+            </video>
+
+            {/* Controls — outside the feathered video so they stay crisp */}
+            {/* Phones: top-right corner (always empty background, never hits the text
+                below whatever the screen height). Desktop: lower-left corner. */}
+            <div className="pointer-events-auto absolute top-[2%] right-0 flex flex-col items-center gap-2 md:top-auto md:right-auto md:bottom-[3%] md:left-[4%] md:flex-row">
+              {!playing && (
+                <button
+                  type="button"
+                  onClick={replay}
+                  className="inline-flex h-10 w-10 items-center justify-center gap-2 rounded-full bg-ink text-sm font-medium text-surface shadow-soft transition-colors hover:bg-ink/85 md:w-auto md:px-4"
+                >
+                  {hasPlayed ? <RotateCcw size={15} aria-hidden /> : <Play size={15} aria-hidden />}
+                  {/* Icon-only on phones (narrow video); label from md up */}
+                  <span className="sr-only md:not-sr-only">{hasPlayed ? "Replay" : "Play"}</span>
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={toggleSound}
+                aria-pressed={!muted}
+                aria-label={muted ? "Turn sound on" : "Turn sound off"}
+                className="flex h-10 w-10 items-center justify-center rounded-full border border-ink/15 bg-surface/80 text-ink shadow-soft backdrop-blur-md transition-colors hover:border-ink/40"
+              >
+                {muted ? <VolumeX size={16} aria-hidden /> : <Volume2 size={16} aria-hidden />}
+              </button>
+            </div>
+          </>
         )}
 
         {mode === "poster" && poster && (
