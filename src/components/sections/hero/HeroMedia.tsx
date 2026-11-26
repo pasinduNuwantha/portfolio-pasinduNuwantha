@@ -16,7 +16,8 @@ type Mode = "video" | "poster" | "placeholder";
 /**
  * Full-body character on the right of the hero.
  * Fallback chain: video → poster image → placeholder silhouette.
- * `mix-blend-multiply` lets a white/cream video background melt into --bg.
+ * `feather-edges` fades the media's edges so its background melts into --bg
+ * (works whatever colour the video background is).
  */
 export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
   const reduce = useReducedMotion();
@@ -44,7 +45,7 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
         {mode === "video" && (
           <video
             ref={videoRef}
-            className="h-full w-full object-contain mix-blend-multiply"
+            className="feather-edges h-full w-full object-contain"
             autoPlay
             muted
             loop
@@ -66,7 +67,7 @@ export function HeroMedia({ webm, mp4, poster, alt }: HeroMediaProps) {
             fill
             priority
             sizes="(min-width: 768px) 40vw, 80vw"
-            className="object-contain mix-blend-multiply"
+            className="feather-edges object-contain"
             onError={() => setMode("placeholder")}
           />
         )}
